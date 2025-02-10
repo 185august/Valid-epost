@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>epost check</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+
+    <script>
+        //model
+        let epost = '';
+        let errorMessage = '';
+
+        //view 
+        updateView();
+        function updateView() {
+            let html = /*HTML*/`
+             <input type="text" name="" id="epostInput" onchange="epostOrNot(this.value)">
+
+            <div id="trueOrFalse\">is it an valid epost?:  ${epost} ${errorMessage}</div>
+            `
+            document.getElementById('app').innerHTML = html;
+        }
+
+        //controller
+        function epostOrNot(textValue) {
+            let hasAtSymbol = false;
+            let hasDotAfterAt = false;
+            let hasSpace = false;
+            errorMessage = '';
+
+            for (let i = 0; i < textValue.length; i++) {
+                if (textValue[i] === ' ') {
+                    hasSpace = true;
+                }
+                if (textValue[i] === '@') {
+                    hasAtSymbol = true;
+                }
+                if (hasAtSymbol && textValue[i] === '.') {
+                    hasDotAfterAt = true;
+                }
+            }
+            
+            if (hasSpace) {
+                epost = false
+                errorMessage += 'no spaces '
+            }else if (!hasAtSymbol) {
+                epost = false
+                errorMessage += 'does not contain @'
+            }else if (!hasDotAfterAt) {
+                epost = false 
+                errorMessage += 'does not contain a dot(.) after @'
+            } else {
+                epost = true
+                errorMessage = '';
+            }
+            updateView();
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
